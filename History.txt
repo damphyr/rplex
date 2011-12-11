@@ -1,0 +1,3 @@
+=== 0.0.1 / 2011-12-11
+* Simple queue management and the bare minimum of the rest API: post a new job, get next job for worker
+* The corresponding client library for the API
