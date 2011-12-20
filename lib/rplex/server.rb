@@ -12,7 +12,8 @@ module Rplex
     post '/job' do
       begin
         reply={}
-        reply[:workers]=@overseer<<params
+        workers= params["workers"] ? params["workers"] : []
+        reply[:workers]=@overseer.add_job(params,workers)
         [200,{'Content-Type' => 'application/json'},reply.to_json]
       rescue
         status 500
