@@ -9,6 +9,7 @@ class TestOverseer < Test::Unit::TestCase
     assert_raise(Rplex::InvalidData) { ov << job_data }
     job_data="foo"
     assert_raise(Rplex::InvalidData) { ov << job_data }
+    assert_raise(Rplex::InvalidData) { ov << nil }
   end
   def test_basic
     ov=Rplex::Overseer.new
