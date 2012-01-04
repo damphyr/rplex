@@ -32,6 +32,10 @@ module Rplex
       [200,{'Content-Type' => 'application/json'},{"version"=>Rplex::Version::STRING}.to_json]
     end
     
+    get '/backlog' do  
+      [200,{'Content-Type' => 'application/json'},@overseer.backlog.to_json]
+    end
+    
     def self.define_settings cfg={}
       cfg||={}
       #the settings that are not public

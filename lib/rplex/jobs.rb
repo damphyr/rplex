@@ -32,9 +32,15 @@ module Rplex
       return queued_in
     end
     #Get the next job for the worker
+    #
+    #If there is no Queue for the worker, create an empty one
     def [](worker)
       @queues[worker]||=Queue.new
       @queues[worker].pop(true) rescue nil
+    end
+    #Get an array of [name,queue size]
+    def backlog
+      @queues.map{|k,v| [k,v.size]} 
     end
     #Returns true if the job data is valid
     def valid? job_data

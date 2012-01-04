@@ -34,4 +34,9 @@ class ServerTest < Test::Unit::TestCase
     assert_equal(200,last_response.status)
     assert_equal(payload,JSON.parse(last_response.body))
   end
+  
+  def test_backlog
+    get '/backlog'
+    assert_equal(200, last_response.status)
+  end
 end

@@ -29,7 +29,18 @@ module Rplex
     rescue
       raise ClientError, $!.message
     end
-
+    
+    def backlog
+      response=RestClient.get(@service,:accept => :json)
+      unless response.empty?
+        return JSON.parse(response)
+      else
+        return []
+      end
+    rescue
+      raise ClientError, $!.message
+    end
+    
     def to_s
       "#{@name} working with #{@service}"
     end

@@ -24,4 +24,13 @@ class TestOverseer < Test::Unit::TestCase
     assert_equal(job_data,ov["slave"])
     assert_nil(ov["slave"])
   end
+  def test_backlog
+    ov=Rplex::Overseer.new
+    assert(ov.backlog.empty?)
+    job_data={"identifier"=>"8888","data"=>{:foo=>"bar",:bar=>"foo"}}
+    ov['worker1']
+    ov['worker2']
+    ov<<job_data
+    assert_equal([['worker1',1],['worker2',1]], ov.backlog)
+  end
 end
