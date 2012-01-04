@@ -38,7 +38,7 @@ Rplex::Processor.new(Rplex::Client.new("name","http://rplex.host:7777/job"),5).r
 
 (The MIT License)
 
-Copyright (c) 2011 FIX
+Copyright (c) 2011-2012 Vassilis Rizopoulos
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
