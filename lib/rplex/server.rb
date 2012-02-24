@@ -36,6 +36,17 @@ module Rplex
       [200,{'Content-Type' => 'application/json'},@overseer.backlog.to_json]
     end
     
+    post '/reset' do
+      begin
+        reply={}
+        workers= params["workers"] ? params["workers"] : @overseer.workers
+        @overseer.reset(workers)
+        [200,{'Content-Type' => 'application/json'},@overseer.backlog.to_json]
+      rescue
+        status 500
+      end
+    end
+    
     def self.define_settings cfg={}
       cfg||={}
       #the settings that are not public

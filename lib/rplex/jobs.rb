@@ -48,5 +48,13 @@ module Rplex
     rescue
       false
     end
+    #All worker queue names
+    def workers
+      @queues.keys
+    end
+    #Empties the worker queues
+    def reset workers
+      workers.each{|worker| @queues[worker].clear if @queues[worker]}
+    end
   end
 end

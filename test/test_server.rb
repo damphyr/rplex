@@ -39,4 +39,16 @@ class ServerTest < Test::Unit::TestCase
     get '/backlog'
     assert_equal(200, last_response.status)
   end
+  
+  def test_reset
+    get '/job/worker'
+    payload={"identifier"=>"8888","data"=>{"url"=>"http://foo.bar/drops","revision"=>"8888"}}
+    post '/job', payload
+    post '/job', payload
+    get '/backlog'
+    assert_equal([["worker",2]], JSON.parse(last_response.body))
+    post '/reset',{"workers"=>['worker']}
+    get '/backlog'
+    assert_equal([["worker",0]], JSON.parse(last_response.body))
+  end
 end
