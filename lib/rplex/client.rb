@@ -30,6 +30,17 @@ module Rplex
       raise ClientError, $!.message
     end
     
+    def reset workers
+      if workers && !workers.empty?
+        response=RestClient.post(@service, {"workers"=>workers}, :content_type => :json, :accept => :json)
+        return JSON.parse(response)
+      else
+        return []
+      end
+    rescue
+      raise ClientError, $!.message
+    end
+    
     def backlog
       response=RestClient.get(@service,:accept => :json)
       unless response.empty?
