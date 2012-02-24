@@ -30,7 +30,7 @@ Use Rplex::Processor to check the queue and do something with any data present
 Rplex::Processor.new(Rplex::Client.new("name","http://rplex.host:7777/job"),5).run!{|job_data| p job_data}
 
 ## TODO
-Get some metrics collection done, write a persistent backend alternative for the queues, add a way to remove and flush a queue, add limited size queue option.
+Get some metrics collection done, write a persistent backend alternative for the queues, add limited size queue option.
 
 ## LICENSE:
 
