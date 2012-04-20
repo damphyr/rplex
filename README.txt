@@ -1,6 +1,6 @@
 = rplex
 
-http://c11865-prj.zuehlke.com
+https://github.com/damphyr/rplex
 
 == DESCRIPTION:
 
