@@ -1,5 +1,6 @@
 === 0.0.4 / 2012-05-31
 * Added ability to limit queue sizes and a general configuration mechanism for the API
+* Queues can be removed
 === 0.0.3 / 2012-02-24
 * Added reset queue functionality
 === 0.0.2 / 2012-01-04

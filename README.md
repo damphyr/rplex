@@ -18,6 +18,9 @@ Each worker polls the rplex queue, and then uses the information to grab the bui
 ### Is that all?
 Queues are created automatically when a worker tries to get data from the queue, data can be posted to a subset of the workers if necessary and that, as they say, is it.
 
+### Really?
+Well, it used to be all of it. Now, you can also limit the size of the queues and remove queues using the client (and the API)
+
 ##Example
 Start the rplex service.
 
@@ -29,8 +32,20 @@ Use Rplex::Processor to check the queue and do something with any data present
 
 Rplex::Processor.new(Rplex::Client.new("name","http://rplex.host:7777/job"),5).run!{|job_data| p job_data}
 
+## REST 
+Not really, but pretty damn close. Check rplex/server.rb for the gruesome details, here's a whirlwind tour
+
+ * GET / --> Version Info
+ * GET /job/worker --> pop the worker queue
+ * POST /job --> push a job in all or some of the queues present
+ * GET /backlog --> how full is each queue?
+ * GET /configuration --> how full can each queue get? 0 means whatever
+ * POST /configuration --> change a queue's limit
+ * DELETE /configuration --> remove a queue
+ * POST /reset --> empty all or some of the queues
+
 ## TODO
-Get some metrics collection done, write a persistent backend alternative for the queues, add limited size queue option.
+Get some metrics collection done, write a persistent backend alternative for the queues.
 
 ## LICENSE:
 

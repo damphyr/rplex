@@ -22,6 +22,9 @@ Each worker polls the rplex queue, and then uses the information to grab the bui
 === Is that all?
 Queues are created automatically when a worker tries to get data from the queue, data can be posted to a subset of the workers if necessary and that as they say is it.
 
+=== Really?
+Well, it used to be all of it. Now, you can also limit the size of the queues and remove queues using the client (and the API)
+
 == Example
 Start the rplex service.
 
