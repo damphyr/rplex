@@ -52,6 +52,25 @@ module Rplex
       raise ClientError, $!.message
     end
     
+    def configuration
+      srv="#{@service}/configuration/#{@name}"
+      response=RestClient.get(srv,:accept => :json)
+      unless response.empty?
+        return JSON.parse(response)
+      else
+        return {}
+      end
+    rescue
+      raise ClientError, $!.message
+    end
+    
+    def configure max_size
+      response=RestClient.post("#{@service}/configuration", {"worker"=>@name, "maximum_size" => max_size}, :content_type => :json, :accept => :json)
+      return response
+    rescue
+      raise ClientError, $!.message
+    end
+    
     def to_s
       "#{@name} working with #{@service}"
     end

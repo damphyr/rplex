@@ -50,4 +50,41 @@ class TestOverseer < Test::Unit::TestCase
     ov.reset(['worker1'])
     assert_equal([['worker1',0],['worker2',0]], ov.backlog)
   end
+  
+  def test_configure
+    ret=nil
+    ov=Rplex::Overseer.new
+    assert_nothing_raised() { ret=ov.configure('worker1',{'maximum_size'=>2}) }
+    assert_equal({'worker'=>'worker1','maximum_size'=>2}, ret)
+    assert_equal([['worker1',0]], ov.backlog)
+    ov<<{"identifier"=>"8888","data"=>{:foo=>"bar",:bar=>"foo"}}
+    assert_equal([['worker1',1]], ov.backlog)
+    ov<<{"identifier"=>"8889","data"=>{:foo=>"bar",:bar=>"foo"}}
+    assert_equal([['worker1',2]], ov.backlog)
+    ov<<{"identifier"=>"8899","data"=>{:foo=>"bar",:bar=>"foo"}}
+    assert_equal([['worker1',2]], ov.backlog)
+    assert_nothing_raised() { ret=ov.configure('worker1',{'maximum_size'=>0}) }
+    assert_equal({'worker'=>'worker1','maximum_size'=>0}, ret)
+    assert_equal([['worker1',0]], ov.backlog)
+    #and now the ugly stuff
+    assert_raise(ArgumentError) { ov.configure('worker1','maximum_size'=>"foo") }
+  end
+  
+  def test_configuration
+    assert_raise(Rplex::InvalidData) {  Rplex::Overseer.new.configuration('worker1') }
+  end
+  def test_full_sized_queue
+    ov=Rplex::Overseer.new
+    jd1={"identifier"=>"8888","data"=>{:foo=>"bar",:bar=>"foo"}}
+    jd2={"identifier"=>"9999","data"=>{:foo=>"bar",:bar=>"foo"}}
+    jd3={"identifier"=>"7777","data"=>{:foo=>"bar",:bar=>"foo"}}
+    ov.configure('worker1',{'maximum_size'=>2})
+    ov<<jd1
+    ov<<jd2
+    ov<<jd3
+    assert_equal([['worker1',2]], ov.backlog)
+    assert_equal(jd2,ov['worker1'])
+    assert_equal(jd3,ov['worker1'])
+    assert_nil(ov['worker1'])
+  end
 end

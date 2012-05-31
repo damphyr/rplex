@@ -22,6 +22,10 @@ module Rplex
       if valid?(job_data)
         @queues.each do |w,q|
           if workers.include?(w)
+            #this handles a SizedQueue without blocking
+            if q.respond_to?(:max) && q.size == q.max
+              q.pop
+            end
             q.push(job_data)
             queued_in+=1  
           end
@@ -56,5 +60,31 @@ module Rplex
     def reset workers
       workers.each{|worker| @queues[worker].clear if @queues[worker]}
     end
+    #Configures the named worker
+    #
+    #worker_config is a Hash with possible keys:
+    # "maximum_size" - when 0 then it's unlimited
+    #
+    #Will create a queue for the worker if it doesn't exist
+    #
+    #Configuring a worker will reset it's queue
+    def configure worker,worker_config
+      if worker_config["maximum_size"]>0
+        @queues[worker]=SizedQueue.new(worker_config["maximum_size"])
+      else
+        @queues[worker]=Queue.new
+      end
+      configuration(worker)
+    end
+    #Returns the worker's configuration
+    def configuration worker
+      if @queues[worker]  
+        @queues[worker].respond_to?(:max) ? max_size=@queues[worker].max : max_size=0
+        {'worker'=>worker,'maximum_size'=>max_size}
+      else
+        raise InvalidData,"non existent queue"
+      end
+    end
+    
   end
 end

@@ -41,7 +41,8 @@ class ServerTest < Test::Unit::TestCase
   end
   
   def test_reset
-    get '/job/worker'
+    #do this because tests are otherwise exec sequence dependent
+    post '/configuration', {'worker'=>'worker','maximum_size'=>0}
     payload={"identifier"=>"8888","data"=>{"url"=>"http://foo.bar/drops","revision"=>"8888"}}
     post '/job', payload
     post '/job', payload
@@ -50,5 +51,16 @@ class ServerTest < Test::Unit::TestCase
     post '/reset',{"workers"=>['worker']}
     get '/backlog'
     assert_equal([["worker",0]], JSON.parse(last_response.body))
+  end
+  
+  def test_configuration
+    get '/configuration'
+    assert_equal([], JSON.parse(last_response.body))
+    get '/job/worker'
+    get '/configuration'
+    assert_equal([{'worker'=>'worker','maximum_size'=>0}], JSON.parse(last_response.body))
+    post '/configuration', {'worker'=>'worker','maximum_size'=>1}
+    get '/configuration/worker'
+    assert_equal({'worker'=>'worker','maximum_size'=>1}, JSON.parse(last_response.body))
   end
 end
