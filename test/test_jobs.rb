@@ -32,7 +32,9 @@ class TestOverseer < Test::Unit::TestCase
     ov['worker1']
     ov['worker2']
     ov<<job_data
-    assert_equal([['worker1',1],['worker2',1]], ov.backlog)
+    assert_equal(2, ov.backlog.size)
+    assert(ov.backlog.include?(['worker1',1]), "worker1 not present")
+    assert(ov.backlog.include?(['worker2',1]), "worker2 not present")
   end
   
   def test_reset_remove
@@ -44,11 +46,13 @@ class TestOverseer < Test::Unit::TestCase
     ov['worker2']
     ov<<jd1
     ov<<jd2
-    assert_equal([['worker1',2],['worker2',2]], ov.backlog)
+    assert_equal(2, ov.backlog.size)
+    assert(ov.backlog.include?(['worker1',2]), "worker1 not present")
+    assert(ov.backlog.include?(['worker2',2]), "worker2 not present")
     ov.reset(['worker2'])
-    assert_equal([['worker1',2],['worker2',0]], ov.backlog)
+    assert(ov.backlog.include?(['worker2',0]), "worker2 not 0ed")
     ov.reset(['worker1'])
-    assert_equal([['worker1',0],['worker2',0]], ov.backlog)
+    assert(ov.backlog.include?(['worker1',0]), "worker1 not 0ed")
     ov.remove('worker1')
     assert_equal([['worker2',0]], ov.backlog)
   end
