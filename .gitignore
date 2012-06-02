@@ -4,3 +4,4 @@ coverage/
 coverage.info
 pkg/
 .source_index
+.rbx/

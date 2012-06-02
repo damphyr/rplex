@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require 'sinatra/base'
 require 'rplex'
 require 'rplex/jobs'
