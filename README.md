@@ -40,8 +40,9 @@ Not really, but pretty damn close. Check rplex/server.rb for the gruesome detail
  * POST /job --> push a job in all or some of the queues present
  * GET /backlog --> how full is each queue?
  * GET /configuration --> how full can each queue get? 0 means whatever
+ * GET /configuration/worker --> get worker's current configuration
  * POST /configuration --> change a queue's limit
- * DELETE /configuration --> remove a queue
+ * DELETE /configuration/worker --> remove the worker queue
  * POST /reset --> empty all or some of the queues
 
 ## TODO
