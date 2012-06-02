@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# encoding: utf-8
 require 'rest_client'
 require 'json'
 module Rplex

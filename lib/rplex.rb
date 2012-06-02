@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# encoding: utf-8
 module Rplex
   module Version
     MAJOR = 0
