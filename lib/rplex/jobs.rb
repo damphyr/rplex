@@ -85,6 +85,9 @@ module Rplex
         raise InvalidData,"non existent queue"
       end
     end
-    
+    #Removes a queue
+    def remove worker
+      @queues.delete(worker)
+    end
   end
 end

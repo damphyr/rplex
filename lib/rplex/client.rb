@@ -71,6 +71,13 @@ module Rplex
       raise ClientError, $!.message
     end
     
+    def remove
+      response=RestClient.delete("#{@service}/configuration/#{worker}")
+      return response
+    rescue
+      raise ClientError, $!.message
+    end
+    
     def to_s
       "#{@name} working with #{@service}"
     end

@@ -35,7 +35,7 @@ class TestOverseer < Test::Unit::TestCase
     assert_equal([['worker1',1],['worker2',1]], ov.backlog)
   end
   
-  def test_reset
+  def test_reset_remove
     ov=Rplex::Overseer.new
     assert(ov.backlog.empty?)
     jd1={"identifier"=>"8888","data"=>{:foo=>"bar",:bar=>"foo"}}
@@ -49,6 +49,8 @@ class TestOverseer < Test::Unit::TestCase
     assert_equal([['worker1',2],['worker2',0]], ov.backlog)
     ov.reset(['worker1'])
     assert_equal([['worker1',0],['worker2',0]], ov.backlog)
+    ov.remove('worker1')
+    assert_equal([['worker2',0]], ov.backlog)
   end
   
   def test_configure

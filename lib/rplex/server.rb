@@ -15,6 +15,18 @@ module Rplex
     get '/backlog' do  
       [200,{'Content-Type' => 'application/json'},@overseer.backlog.to_json]
     end
+    post '/reset' do
+      begin
+        reply={}
+        workers= params["workers"] ? params["workers"] : @overseer.workers
+        @overseer.reset(workers)
+        [200,{'Content-Type' => 'application/json'},@overseer.backlog.to_json]
+      rescue
+        status 500
+      end
+    end
+    ###########
+    # /job
     post '/job' do
       begin
         reply={}
@@ -37,17 +49,8 @@ module Rplex
       end
     end
     
-    
-    post '/reset' do
-      begin
-        reply={}
-        workers= params["workers"] ? params["workers"] : @overseer.workers
-        @overseer.reset(workers)
-        [200,{'Content-Type' => 'application/json'},@overseer.backlog.to_json]
-      rescue
-        status 500
-      end
-    end
+    ###########
+    # /configuration
     get '/configuration' do 
       config=@overseer.workers.map{|worker| @overseer.configuration(worker)}
       [200,{'Content-Type' => 'application/json'},config.to_json]
@@ -73,6 +76,10 @@ module Rplex
         status 500
       end
     end
+    delete '/configuration/:worker' do |worker|
+      @overseer.remove(worker)
+    end
+    
     def self.define_settings cfg={}
       cfg||={}
       #the settings that are not public
