@@ -44,7 +44,7 @@ module Rplex
     end
     
     def backlog
-      response=RestClient.get(@service,:accept => :json)
+      response=RestClient.get("#{@service}/backlog",:accept => :json)
       unless response.empty?
         return JSON.parse(response)
       else
