@@ -6,7 +6,7 @@ require 'rubygems'
 require 'hoe'
 
 Hoe.spec 'rplex' do |prj|
-  developer('Vassilis Rizopoulos', 'var@zuehlke.com')
+  developer('Vassilis Rizopoulos', 'vassilisrizopoulos@gmail.com')
   prj.version=Rplex::Version::STRING
   prj.summary = 'rplex demultiplexes jobs across multiple workers'
   prj.description = prj.paragraphs_of('README.txt', 1..5).join("\n\n")
