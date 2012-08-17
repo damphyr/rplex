@@ -7,6 +7,7 @@ module Rplex
   end
   
   class Client
+    attr_reader :name,:service
     def initialize name,srv
       @name=name
       @service=srv
@@ -74,7 +75,7 @@ module Rplex
     end
     
     def remove
-      response=RestClient.delete("#{@service}/configuration/#{worker}")
+      response=RestClient.delete("#{@service}/configuration/#{@name}")
       return response
     rescue
       raise ClientError, $!.message
