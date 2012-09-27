@@ -1,4 +1,5 @@
 ## rplex
+[![Build Status](https://secure.travis-ci.org/damphyr/rplex.png)](http://travis-ci.org/damphyr/rplex)
 
 Dead simple asynchronous data based job demultiplexing in Ruby.
 
