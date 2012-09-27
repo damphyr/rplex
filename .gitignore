@@ -5,3 +5,6 @@ coverage.info
 pkg/
 .source_index
 .rbx/
+*.sublime-workspace
+
+*.sublime-project
